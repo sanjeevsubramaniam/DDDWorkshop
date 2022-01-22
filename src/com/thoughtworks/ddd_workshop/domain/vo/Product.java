@@ -12,6 +12,11 @@ public class Product {
         this.price = Objects.requireNonNull(price);
     }
 
+    public Product(Product other){
+        this.name = other.name();
+        this.price = other.price;
+    }
+
     public String name(){
         return this.name;
     }

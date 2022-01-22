@@ -1,5 +1,7 @@
 package com.thoughtworks.ddd_workshop.domain.vo;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Item {
@@ -36,5 +38,13 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(product, quantity);
+    }
+
+    public List<Product> products() {
+        List<Product> products = new LinkedList<>();
+        for(int i = 1; i <= quantity; i++){
+            products.add(new Product(this.product));
+        }
+        return products;
     }
 }

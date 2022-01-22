@@ -21,5 +21,6 @@ public class Application {
 
         cart.listRemovedProducts().ifPresent(items -> System.out.println(items));
 
+        cart.checkout();
     }
 }

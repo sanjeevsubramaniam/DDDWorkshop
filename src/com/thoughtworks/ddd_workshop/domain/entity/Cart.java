@@ -1,5 +1,6 @@
 package com.thoughtworks.ddd_workshop.domain.entity;
 
+import com.thoughtworks.ddd_workshop.domain.events.OrderCreated;
 import com.thoughtworks.ddd_workshop.domain.vo.Item;
 import com.thoughtworks.ddd_workshop.domain.vo.Product;
 import com.thoughtworks.ddd_workshop.domain.events.DomainEvent;
@@ -14,6 +15,7 @@ public class Cart {
     private final List<Item> items;
     private final List<DomainEvent> events;
     private final UUID cartId;
+    private boolean isCheckedOut;
 
     public Cart() {
         cartId = UUID.randomUUID();
@@ -47,6 +49,17 @@ public class Cart {
                    .collect(Collectors.toList()));
         }
         return Optional.empty();
+    }
+
+    public Order checkout(){
+        List<Product> products = new LinkedList<>();
+        items.forEach(item -> {
+            products.addAll(item.products());
+        });
+        Order order = new Order(products);
+        events.add(new OrderCreated(order.id()));
+        isCheckedOut = true;
+        return order;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Price {
     }
 
     public Price reduceBy(double percentage) {
-        var discount = this.amount * (percentage/100.00);
-        return  new Price(this.amount - discount, this.currency);
+        var reduce = this.amount * (percentage/100.00);
+        return  new Price(this.amount - reduce, this.currency);
     }
 }
