@@ -1,18 +1,24 @@
 package com.thoughtworks.ddd_workshop.applicattion;
 
-import com.thoughtworks.ddd_workshop.domain.Cart;
-import com.thoughtworks.ddd_workshop.domain.Product;
+import com.thoughtworks.ddd_workshop.domain.*;
+
+import java.util.Currency;
 
 public class Application {
     public static void main(String[] args) {
         Cart cart = new Cart();
+        Pricer pricer = new Pricer(new DiscountOnCompetitorPriceStrategy(10.00));
+        Product ipad = new Product("IpadPro", pricer.price("IpadPro"));
+        Product pen = new Product("Hero ink Pen", pricer.price("Hero ink Pen"));
+        Product bat = new Product("GM Cricket bat", pricer.price("GM Cricket bat"));
 
-        cart.add(Product.of("IpadPro"));
-        cart.add(Product.of("Hero ink Pen"));
-        cart.add(Product.of("GM Cricket bat"), 2);
+        cart.add(ipad);
+        cart.add(pen);
+        cart.add(bat, 2);
 
-        cart.remove(Product.of("IpadPro"));
+        cart.remove(ipad);
 
-        System.out.println(cart.listRemovedProducts());
+        cart.listRemovedProducts().ifPresent(items -> System.out.println(items));
+
     }
 }

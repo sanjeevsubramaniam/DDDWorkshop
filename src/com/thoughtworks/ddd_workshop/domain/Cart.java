@@ -1,17 +1,19 @@
 package com.thoughtworks.ddd_workshop.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import com.thoughtworks.ddd_workshop.events.*;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Cart {
-    private List<Item> items;
-    private  List<Item> removedItems;
+    private final List<Item> items;
+    private final List<DomainEvent> events;
+    private final UUID cartId;
 
     public Cart() {
+        cartId = UUID.randomUUID();
         items = new LinkedList<>();
-        removedItems = new LinkedList<>();
+        events = new LinkedList<>();
     }
     public void add(Product product){
        add(product, 1);
@@ -23,15 +25,35 @@ public class Cart {
         }else{
             items.add(new Item(product, quantity));
         }
+        events.add(new ItemAddedToTheCart());
     }
     public void remove(Product product){
         Optional<Item> foundItem = items.stream().filter(item -> item.isOf(product)).findFirst();
         foundItem.ifPresent(item ->  {
             this.items.remove(item);
-            this.removedItems.add(item);
+            events.add(new ItemRemovedFromTheCart(item.itemName()));
         });
     }
-    public List<String> listRemovedProducts(){
-       return removedItems.stream().map(item -> item.itemName()).collect(Collectors.toList());
+    public Optional<List<String>> listRemovedProducts(){
+        List<DomainEvent> filteredEvents = events.stream()
+                .filter(event -> event.getClass().equals(ItemRemovedFromTheCart.class)).toList();
+        if(filteredEvents != null){
+           return Optional.of(filteredEvents.stream().map(event -> (ItemRemovedFromTheCart)event).map(event -> event.getItemName())
+                   .collect(Collectors.toList()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return cartId.equals(cart.cartId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartId);
     }
 }

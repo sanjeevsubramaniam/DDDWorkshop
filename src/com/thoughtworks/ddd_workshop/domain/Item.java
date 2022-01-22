@@ -22,7 +22,7 @@ public class Item {
     }
 
     public String itemName(){
-        return this.product.name;
+        return this.product.name();
     }
 
     @Override

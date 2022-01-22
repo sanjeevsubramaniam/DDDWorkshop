@@ -1,24 +1,19 @@
 package com.thoughtworks.ddd_workshop.domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Product {
-    private static Map<String, Product> productMap = new HashMap<>();
-    String name;
+    private String name;
+    private Price price;
 
-    public static Product of(String name){
-        var product = productMap.get(name);
-        if(product == null){
-           product = new Product(name);
-            productMap.put(name, product);
-        }
-        return product;
+
+    public Product(String name, Price price) {
+        this.name = Objects.requireNonNull(name);
+        this.price = Objects.requireNonNull(price);
     }
 
-    private Product(String name) {
-        this.name = Objects.requireNonNull(name);
+    public String name(){
+        return this.name;
     }
 
     @Override
