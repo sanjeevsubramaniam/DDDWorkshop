@@ -1,4 +1,4 @@
-package com.thoughtworks.ddd_workshop.domain;
+package com.thoughtworks.ddd_workshop.domain.vo;
 
 import java.util.Currency;
 

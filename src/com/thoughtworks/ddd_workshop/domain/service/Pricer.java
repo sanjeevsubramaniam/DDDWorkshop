@@ -1,4 +1,6 @@
-package com.thoughtworks.ddd_workshop.domain;
+package com.thoughtworks.ddd_workshop.domain.service;
+
+import com.thoughtworks.ddd_workshop.domain.vo.Price;
 
 public class Pricer {
 

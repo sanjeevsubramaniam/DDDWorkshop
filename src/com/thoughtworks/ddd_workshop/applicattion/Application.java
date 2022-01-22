@@ -1,8 +1,9 @@
 package com.thoughtworks.ddd_workshop.applicattion;
 
-import com.thoughtworks.ddd_workshop.domain.*;
-
-import java.util.Currency;
+import com.thoughtworks.ddd_workshop.domain.entity.Cart;
+import com.thoughtworks.ddd_workshop.domain.service.DiscountOnCompetitorPriceStrategy;
+import com.thoughtworks.ddd_workshop.domain.service.Pricer;
+import com.thoughtworks.ddd_workshop.domain.vo.Product;
 
 public class Application {
     public static void main(String[] args) {

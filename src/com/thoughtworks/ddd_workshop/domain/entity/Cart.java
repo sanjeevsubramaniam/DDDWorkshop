@@ -1,6 +1,11 @@
-package com.thoughtworks.ddd_workshop.domain;
+package com.thoughtworks.ddd_workshop.domain.entity;
 
-import com.thoughtworks.ddd_workshop.events.*;
+import com.thoughtworks.ddd_workshop.domain.vo.Item;
+import com.thoughtworks.ddd_workshop.domain.vo.Product;
+import com.thoughtworks.ddd_workshop.domain.events.DomainEvent;
+import com.thoughtworks.ddd_workshop.domain.events.ItemAddedToTheCart;
+import com.thoughtworks.ddd_workshop.domain.events.ItemRemovedFromTheCart;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
